@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <h1>Hi, {{ user.username }}!</h1>
+
+   <p> Your bank balance is: {{user.bankBalance}}
+     <br>
+     Your cash balance is: {{user.cashBalance}}
+     <br>
+     Your PayLah! and PayNow! balance is: {{user.payappBalance}}
+   </p>
+{% endblock %}
