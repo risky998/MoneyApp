@@ -27,6 +27,7 @@ class TransactionForm(FlaskForm):
     debit = BooleanField('Was this a debit?')
     amount = IntegerField("Amount", validators = [DataRequired()])
     description = StringField('Describe your transaction', validators = [DataRequired()])
+    submit = SubmitField('Log Transaction')
 
 
 

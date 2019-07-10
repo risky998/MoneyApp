@@ -1,4 +1,4 @@
-<!-- Registration Form -->
+<!-- Form for transaction -->
 
 {%block content%}
 <h1> Register </h1>
@@ -6,34 +6,55 @@
   {{form.hidden_tag()}}
 
   <p>
-    {{form.date.label}}
-    {{form.date(size=32)}}<br>
+    {{form.username.label}}
+    {{form.username(size=32)}}<br>
     {% for error in form.username.errors%}
     <span style = "color: red;">[{{error}}]</span>
     {% endfor %}
     </p>
 
   <p>
-    {{form.debit.label}}
-    {{form.debit(size = 32)}} <br>
+    {{form.email.label}}
+    {{form.email(size = 64)}} <br>
     {% for error in form.email.errors %}
     <span style = "color: red;">[{{error}}]</span>
     {% endfor %}
 </p>
 
-<p> {{form.amount.label}}
-  {{form.amount(size=32)}}<br>
+<p> {{form.password.label}}
+  {{form.password(size=32)}}<br>
   {% for error in form.password.errors%}
   <span style = "color: red;">[{{error}}]</span>
 {%endfor%}
 
+<p>
+  {{form.password2.label}}
+  {{form.password2(size = 32)}}
+  {% for error in form.password2.errors %}
+  <span style = "color: red;">[{{error}}]</span>
+ {%endfor%}
+ </p>
 
- <p> {{form.description.label}}
-   {{form.description(size = 32)}}<br>
+ <p> {{form.cash.label}}
+   {{form.cash(size = 32)}}<br>
    {% for error in form.cash.errors %}
    <span style = "color: red;">[{{error}}]</span>
    {% endfor %}
    </p>
+
+   <p> {{form.bank.label}}
+     {{form.bank(size =32)}}<br>
+     {% for error in form.bank.errors %}
+     <span style = "color:red;">[{{error}}]</span>
+     {% endfor %}
+     </p>
+
+     <p> {{form.payapp.label}}
+        {{form.payapp(size = 32)}}<br>
+        {% for error in form.payapp.errors %}
+        <span style = "color:red;">[{{error}}]</span>
+        {% endfor %}
+        </p>
 
  <p> {{form.submit()}} </p>
  </form>

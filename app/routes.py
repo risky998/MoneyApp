@@ -1,9 +1,9 @@
 
 from app import app, db
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, TransactionForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, CashTransaction
 from werkzeug.urls import url_parse
 
 
@@ -67,4 +67,27 @@ def home():
     return render_template('home.html', title = "Home", user=user)
 
 #Logging of a cash transaction
-@app.route('/logcash')
+@app.route('/logcash', methods = ['GET', 'POST'])
+@login_required
+def logcash():
+    if current_user.is_anonymous:
+        return redirect(url_for(login))
+    form = TransactionForm()
+    if form.validate_on_submit():
+        transaction = CashTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data)
+        db.session.add(transaction)
+        db.session.commit()
+        flash('Cash Transaction Registered')
+        if transaction.debit == True:
+            current_user.cashBalance = current_user.cashBalance - transaction.amount
+            user = User.query.filter_by(username = current_user.username).first()
+            user.cashBalance = current_user.cashBalance
+            db.session.commit()
+        if transaction.debit == False:
+            current_user.cashBalance = current_user.cashBalance + transaction.amount
+            user = User.query.filter_by(username = current_user.username).first()
+            user.cashBalance = current_user.cashBalance
+            db.session.commit()
+        return redirect(url_for('login'))
+
+    return render_template('logcash.html', title = "Log Cash Transaction", form = form)
