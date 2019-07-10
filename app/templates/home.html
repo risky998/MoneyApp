@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-   <h1>Hi, {{ user.username }}!</h1>
+   <h1>Hi, {{ current_user.username }}!</h1>
 
-   <p> Your bank balance is: {{user.bankBalance}}
+   <p> Your cash balance is: {{current_user.cashBalance}}
      <br>
-     Your cash balance is: {{user.cashBalance}}
+     Your bank balance is: {{current_user.bankBalance}}
      <br>
-     Your PayLah! and PayNow! balance is: {{user.payappBalance}}
+     Your PayLah! and PayNow! balance is: {{current_user.payappBalance}}
    </p>
+
+   <p> Record a Cash Transaction </p>
+   <p> Record a Bank Transaction </p>
+   <p> Record a PayApp Transaction </p>
 {% endblock %}

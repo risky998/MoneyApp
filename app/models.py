@@ -39,6 +39,7 @@ class User(UserMixin, db.Model):
 class CashTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
+    date = db.Column(db.String, index = True)
     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
     amount = db.Column(db.Integer, index = True)
     description = db.Column(db.String(255), index = True)
@@ -46,6 +47,7 @@ class CashTransaction(db.Model):
 class BankTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
+    date = db.Column(db.String, index = True)
     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
     amount = db.Column(db.Integer, index = True)
     description = db.Column(db.String(255), index = True)
@@ -53,6 +55,7 @@ class BankTransaction(db.Model):
 class PayAppTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
+    date = db.Column(db.String, index = True)
     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
     amount = db.Column(db.Integer, index = True)
     description = db.Column(db.String(255), index = True)
