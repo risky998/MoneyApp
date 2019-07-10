@@ -10,9 +10,8 @@
      Your PayLah! and PayNow! balance is: {{current_user.payappBalance}}
    </p>
 
-   <a href = "{{url_for('logcash')}}"> Record a Cash Transaction </a>
+   <a href = "{{url_for('logcash')}}"> Record a Cash Transaction </a> <br> 
+   <a href = "{{url_for('logbank')}}"> Record a Bank Transaction </a>
 
-
-   <p> Record a Bank Transaction </p>
    <p> Record a PayApp Transaction </p>
 {% endblock %}
