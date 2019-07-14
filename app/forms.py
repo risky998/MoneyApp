@@ -17,15 +17,15 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     password2 = PasswordField('Repeat Password', validators = [DataRequired(), EqualTo('password')])
-    cash = IntegerField('Starting Cash Balance')
-    bank = IntegerField('Starting Bank Balance')
-    payapp = IntegerField('Starting PayApp Balance')
+    cash = DecimalField('Starting Cash Balance')
+    bank = DecimalField('Starting Bank Balance')
+    payapp = DecimalField('Starting PayApp Balance')
     submit = SubmitField('Register')
 
 class TransactionForm(FlaskForm):
     date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
     debit = BooleanField('Was this a debit?')
-    amount = IntegerField("Amount", validators = [DataRequired()])
+    amount = DecimalField("Amount", validators = [DataRequired()])
     description = StringField('Describe your transaction', validators = [DataRequired()])
     submit = SubmitField('Log Transaction')
 
