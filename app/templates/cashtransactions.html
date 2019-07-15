@@ -5,8 +5,10 @@
 <hr>
 {% for transaction in transactions %}
 <p>
-Date: {{transaction.date}}
-Amount: {{transaction.amount}}
+Date: {{transaction.date}} |
+Amount: {{transaction.amount}} |
+Description: {{transaction.description}} |
+Debit: {% if transaction.debit %} yes {% else %} no {% endif %}
 
 </p>
 {% endfor %}
