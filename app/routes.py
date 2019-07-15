@@ -152,3 +152,21 @@ def allcashtransaction():
     user = current_user
     transactions = current_user.allCashTransactions
     return render_template('cashtransactions.html', user = user, transactions = transactions)
+
+@app.route('/allbanktransaction')
+@login_required
+def allbanktransaction():
+    if current_user.is_anonymous:
+        return redirect(url_for(login))
+    user = current_user
+    transactions = current_user.allBankTransactions
+    return render_template('banktransactions.html', user = user, transactions = transactions)
+
+@app.route('/allpayapptransaction')
+@login_required
+def allpayapptransaction():
+    if current_user.is_anonymous:
+        return redirect(url_for(login))
+    user = current_user
+    transactions = current_user.allPayAppTransactions
+    return render_template('payapptransactions.html', user = user, transactions = transactions)
