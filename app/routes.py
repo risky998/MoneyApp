@@ -143,3 +143,12 @@ def logpayapp():
         return redirect(url_for('login'))
 
     return render_template('logpayapp.html', title = "Log PayApp Transaction", form = form)
+
+@app.route('/allcashtransaction')
+@login_required
+def allcashtransaction():
+    if current_user.is_anonymous:
+        return redirect(url_for(login))
+    user = current_user
+    transactions = current_user.allCashTransactions
+    return render_template('cashtransactions.html', user = user, transactions = transactions)
