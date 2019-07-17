@@ -1,16 +1,29 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<h1>User: {{user.username}} PayLah! and PayNow! Transactions </h1>
+<h1> {{user.username}}'s' Pay App Transactions </h1>
 <hr>
-{% for transaction in transactions %}
-<p>
-Date: {{transaction.date}} |
-Amount: {{transaction.amount}} |
-Description: {{transaction.description}} |
-Debit: {% if transaction.debit %} yes {% else %} no {% endif %}
 
-</p>
-{% endfor %}
+<table class = "table">
+  <thead class = "thead-light">
+  <tr>
+    <th scope = "col"> Transaction Date </th>
+    <th scope = "col"> Transaction Amount </th>
+    <th scope = "col"> Transaction Description </th>
+    <th scope = "col"> Debit? </th>
+  </tr>
+  </thead>
+
+  {% for transaction in transactions %}
+  <tbody class = "tbody light">
+
+  <th scope = "row"> {{transaction.date}} </th>
+  <th scope = "row"> {{transaction.amount}} </th>
+  <th scope = "row"> {{transaction.description}} </th>
+  <th scope = "row">{% if transaction.debit %} yes {% else %} no {% endif %}</th>
+
+  </tbody>
+
+  {% endfor %}
 
 {% endblock %}
