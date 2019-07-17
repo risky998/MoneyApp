@@ -1,40 +1,13 @@
 <!-- Form for bank transaction -->
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {%block app_content%}
 <h1> Log Bank Transaction </h1>
-<form action = "" method = "post">
-  {{form.hidden_tag()}}
+<div class = "row">
+  <div class = "col-md-4">
+    {{ wtf.quick_form(form) }}
+    </div>
+    </div>
 
-  <p>
-    {{form.date.label}}
-    {{form.date(size=32)}}<br>
-    {% for error in form.date.errors%}
-    <span style = "color: red;">[{{error}}]</span>
-    {% endfor %}
-    </p>
-
-  <p>
-    {{form.debit.label}}
-    {{form.debit(size = 32)}} <br>
-    {% for error in form.debit.errors %}
-    <span style = "color: red;">[{{error}}]</span>
-    {% endfor %}
-</p>
-
-<p> {{form.amount.label}}
-  {{form.amount(size=32)}}<br>
-  {% for error in form.amount.errors%}
-  <span style = "color: red;">[{{error}}]</span>
-{%endfor%}
-
- <p> {{form.description.label}}
-   {{form.description(size = 32)}}<br>
-   {% for error in form.description.errors %}
-   <span style = "color: red;">[{{error}}]</span>
-   {% endfor %}
-   </p>
-
-
- <p> {{form.submit()}} </p>
- </form>
  {% endblock %}
