@@ -10,6 +10,7 @@
     <th scope = "col"> Transaction Date </th>
     <th scope = "col"> Transaction Amount </th>
     <th scope = "col"> Transaction Description </th>
+    <th scope = "col"> Transaction Category </th> 
     <th scope = "col"> Debit? </th>
   </tr>
   </thead>
@@ -20,6 +21,7 @@
   <th scope = "row"> {{transaction.date}} </th>
   <th scope = "row"> {{transaction.amount}} </th>
   <th scope = "row"> {{transaction.description}} </th>
+  <th scope = "row"> {{transaction.category}} </th>
   <th scope = "row">{% if transaction.debit %} yes {% else %} no {% endif %}</th>
 
   </tbody>

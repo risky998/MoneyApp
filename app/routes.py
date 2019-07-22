@@ -15,6 +15,7 @@ def index():
     # user = {"username" : "Rishabh Sarup"}
     return render_template('index.html', title = "Index")
 
+#Registers a new user and sets their starting balances
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -75,7 +76,7 @@ def logcash():
         return redirect(url_for(login))
     form = TransactionForm()
     if form.validate_on_submit():
-        transaction = CashTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data)
+        transaction = CashTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data)
         db.session.add(transaction)
         db.session.commit()
         flash('Cash Transaction Registered')
@@ -101,7 +102,7 @@ def logbank():
         return redirect(url_for(login))
     form = TransactionForm()
     if form.validate_on_submit():
-        transaction = BankTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data)
+        transaction = BankTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data)
         db.session.add(transaction)
         db.session.commit()
         flash('Bank Transaction Registered')
@@ -127,7 +128,7 @@ def logpayapp():
         return redirect(url_for(login))
     form = TransactionForm()
     if form.validate_on_submit():
-        transaction = PayAppTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data)
+        transaction = PayAppTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data)
         db.session.add(transaction)
         db.session.commit()
         flash('PayApp Transaction Registered')
@@ -145,6 +146,7 @@ def logpayapp():
 
     return render_template('logpayapp.html', title = "Log PayApp Transaction", form = form)
 
+#displays all cash transactions
 @app.route('/allcashtransaction')
 @login_required
 def allcashtransaction():
@@ -154,6 +156,8 @@ def allcashtransaction():
     transactions = current_user.allCashTransactions
     return render_template('cashtransactions.html', user = user, transactions = transactions)
 
+
+#displays all bank transactions
 @app.route('/allbanktransaction')
 @login_required
 def allbanktransaction():
@@ -163,6 +167,8 @@ def allbanktransaction():
     transactions = current_user.allBankTransactions
     return render_template('banktransactions.html', user = user, transactions = transactions)
 
+
+#displays all payapp transactions
 @app.route('/allpayapptransaction')
 @login_required
 def allpayapptransaction():
@@ -171,6 +177,7 @@ def allpayapptransaction():
     user = current_user
     transactions = current_user.allPayAppTransactions
     return render_template('payapptransactions.html', user = user, transactions = transactions)
+
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():

@@ -60,6 +60,7 @@ class CashTransaction(db.Model):
     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
     amount = db.Column(db.Float, index = True)
     description = db.Column(db.String(255), index = True)
+    category = db.Column(db.String(255), index = True)
 
 class BankTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,6 +69,7 @@ class BankTransaction(db.Model):
     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
     amount = db.Column(db.Float, index = True)
     description = db.Column(db.String(255), index = True)
+    category = db.Column(db.String(255), index = True)
 
 class PayAppTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -76,3 +78,4 @@ class PayAppTransaction(db.Model):
     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
     amount = db.Column(db.Float, index = True)
     description = db.Column(db.String(255), index = True)
+    category = db.Column (db.String(255), index = True)

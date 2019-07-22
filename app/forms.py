@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DecimalField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DecimalField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, CashTransaction, BankTransaction, PayAppTransaction
 
@@ -32,16 +32,7 @@ class RegistrationForm(FlaskForm):
     payapp = DecimalField('Starting PayApp Balance')
     submit = SubmitField('Register')
 
-class TransactionForm(FlaskForm):
-    date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
-    debit = BooleanField('Was this a debit?')
-    amount = DecimalField("Amount", validators = [DataRequired()])
-    description = StringField('Describe your transaction', validators = [DataRequired()])
-    submit = SubmitField('Log Transaction')
-
-
-
-# If the username already exists in db, they will need to use a different name
+ # If the username already exists in db, they will need to use a different name
     def validate_username(self, username):
         user = User.query.filter_by(username = username.data).first()
         if user is not None:
@@ -52,3 +43,14 @@ class TransactionForm(FlaskForm):
         email = User.query.filter_by(email = email.data).first()
         if email is not None:
             raise ValidationError('This email has already been registered on this website. Please use a different email')
+
+
+class TransactionForm(FlaskForm):
+    date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
+    debit = BooleanField('Was this a debit?')
+    amount = DecimalField("Amount", validators = [DataRequired()])
+    description = StringField('Describe your transaction', validators = [DataRequired()])
+    category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')])
+    submit = SubmitField('Log Transaction')
+
+
