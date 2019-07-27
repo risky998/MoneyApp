@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<h1> {{user.username}}'s' Pay App Transactions </h1>
+<h1> {{user.username}}'s PayApp Transactions </h1>
 <hr>
 
-<table class = "table">
+<div class = col-md-6>
+   <h2> All your debits </h2> 
+
+  <table class = "table">
   <thead class = "thead-light">
   <tr>
     <th scope = "col"> Transaction Date </th>
@@ -14,8 +17,10 @@
     <th scope = "col"> Debit? </th>
   </tr>
   </thead>
+ 
 
   {% for transaction in transactions %}
+  {%if transaction.debit == True %}
   <tbody class = "tbody light">
 
   <th scope = "row"> {{transaction.date}} </th>
@@ -26,6 +31,48 @@
 
   </tbody>
 
+  {% endif %}
+
   {% endfor %}
+</table>
+
+</div>
+
+
+<div class = col-md-6>
+    <h2> All your income </h2> 
+ 
+   <table class = "table">
+   <thead class = "thead-light">
+   <tr>
+     <th scope = "col"> Transaction Date </th>
+     <th scope = "col"> Transaction Amount </th>
+     <th scope = "col"> Transaction Description </th>
+     <th scope = "col"> Transaction Category </th> 
+     <th scope = "col"> Debit? </th>
+   </tr>
+   </thead>
+  
+ 
+   {% for transaction in transactions %}
+   {%if transaction.debit == False %}
+   <tbody class = "tbody light">
+ 
+   <th scope = "row"> {{transaction.date}} </th>
+   <th scope = "row"> {{transaction.amount}} </th>
+   <th scope = "row"> {{transaction.description}} </th>
+   <th scope = "row"> {{transaction.category}} </th>
+   <th scope = "row">{% if transaction.debit %} yes {% else %} no {% endif %}</th>
+ 
+   </tbody>
+ 
+   {% endif %}
+ 
+   {% endfor %}
+ </table>
+ 
+ </div>
+ 
+
 
 {% endblock %}
