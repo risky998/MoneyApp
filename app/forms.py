@@ -48,7 +48,7 @@ class RegistrationForm(FlaskForm):
 class TransactionForm(FlaskForm):
     date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
     debit = BooleanField('Was this a debit?')
-    amount = DecimalField("Amount (Numbers Only - No Currency)", validators = [DataRequired()])
+    amount = DecimalField("Amount", validators = [DataRequired("Please Enter Numbers Only")])
     category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')])
     description = StringField('Describe your transaction', validators = [DataRequired()])
     submit = SubmitField('Log Transaction')
