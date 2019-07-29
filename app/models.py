@@ -25,9 +25,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
 
     #creating relations between user and transactions
-    allCashTransactions = db.relationship('CashTransaction', backref = 'cashspender', lazy = 'dynamic')
-    allBankTransactions = db.relationship('BankTransaction', backref= 'bankspender', lazy = 'dynamic')
-    allPayAppTransactions = db.relationship('PayAppTransaction', backref = 'payappspender', lazy = 'dynamic' )
+    allTransactions = db.relationship('Transaction', backref = 'spender',lazy = 'dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -52,8 +50,8 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
-#Class for all cash transactions that the user makes.
-class CashTransaction(db.Model):
+#Class for all transactions that the user makes. Replacing all transaction types into one big model. 
+class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
     date = db.Column(db.String, index = True)
@@ -61,21 +59,22 @@ class CashTransaction(db.Model):
     amount = db.Column(db.Float, index = True)
     description = db.Column(db.String(255), index = True)
     category = db.Column(db.String(255), index = True)
+    type = db.Column(db.String(255), index = True)
 
-class BankTransaction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
-    date = db.Column(db.String, index = True)
-    debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
-    amount = db.Column(db.Float, index = True)
-    description = db.Column(db.String(255), index = True)
-    category = db.Column(db.String(255), index = True)
+# class BankTransaction(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
+#     date = db.Column(db.String, index = True)
+#     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
+#     amount = db.Column(db.Float, index = True)
+#     description = db.Column(db.String(255), index = True)
+#     category = db.Column(db.String(255), index = True)
 
-class PayAppTransaction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
-    date = db.Column(db.String, index = True)
-    debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
-    amount = db.Column(db.Float, index = True)
-    description = db.Column(db.String(255), index = True)
-    category = db.Column (db.String(255), index = True)
+# class PayAppTransaction(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #The user that the transaction is associated with.
+#     date = db.Column(db.String, index = True)
+#     debit = db.Column(db.Boolean, index = True) # True if the amount is to be subtracted, false if it is actually a credit
+#     amount = db.Column(db.Float, index = True)
+#     description = db.Column(db.String(255), index = True)
+#     category = db.Column (db.String(255), index = True)

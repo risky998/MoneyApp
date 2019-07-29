@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DecimalField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
-from app.models import User, CashTransaction, BankTransaction, PayAppTransaction
+from app.models import User, Transaction
 
 
 #Form that takes in login factors
@@ -49,7 +49,8 @@ class TransactionForm(FlaskForm):
     date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
     debit = BooleanField('Was this a debit?')
     amount = DecimalField("Amount", validators = [DataRequired("Please Enter Numbers Only")])
-    category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')])
+    type = SelectField('Receipt/Payment Mode', choices = [('Cash', 'Cash'), ('Bank', 'Bank'), ('PayApp', 'PayApp')], validators = [DataRequired()])
+    category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')], validators = [DataRequired()])
     description = StringField('Describe your transaction', validators = [DataRequired()])
     submit = SubmitField('Log Transaction')
 

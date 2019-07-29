@@ -3,7 +3,7 @@ from app import app, db
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm, TransactionForm, ResetPasswordRequestForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, CashTransaction, BankTransaction, PayAppTransaction
+from app.models import User, Transaction
 from werkzeug.urls import url_parse
 from app.email import send_password_reset_email
 
@@ -76,23 +76,46 @@ def logcash():
         return redirect(url_for(login))
     form = TransactionForm()
     if form.validate_on_submit():
-        transaction = CashTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data)
+        transaction = Transaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data, type = form.type.data)
         db.session.add(transaction)
         db.session.commit()
-        flash('Cash Transaction Registered')
-        if transaction.debit == True:
-            current_user.cashBalance = current_user.cashBalance - transaction.amount
-            user = User.query.filter_by(username = current_user.username).first()
-            user.cashBalance = current_user.cashBalance
-            db.session.commit()
-        if transaction.debit == False:
-            current_user.cashBalance = current_user.cashBalance + transaction.amount
-            user = User.query.filter_by(username = current_user.username).first()
-            user.cashBalance = current_user.cashBalance
-            db.session.commit()
+        flash('Transaction Registered')
+        if transaction.type == "Cash":
+            if transaction.debit == True:
+                current_user.cashBalance = current_user.cashBalance - transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.cashBalance = current_user.cashBalance
+                db.session.commit()
+            elif transaction.debit == False:
+                current_user.cashBalance = current_user.cashBalance + transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.cashBalance = current_user.cashBalance
+                db.session.commit()
+        elif transaction.type == "Bank":
+            if transaction.debit == True:
+                current_user.bankBalance = current_user.bankBalance - transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.bankBalance = current_user.bankBalance
+                db.session.commit()
+            elif transaction.debit == False:
+                current_user.bankBalance = current_user.bankBalance + transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.bankBalance = current_user.bankBalance
+                db.session.commit()
+        elif transaction.type == "PayApp":
+            if transaction.debit == True:
+                current_user.payappBalance = current_user.payappBalance - transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.payappBalance = current_user.payappBalance
+                db.session.commit()
+            elif transaction.debit == False:
+                current_user.payappBalance = current_user.payappBalance + transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.payappBalance = current_user.payappBalance
+                db.session.commit()
         return redirect(url_for('login'))
 
-    return render_template('logcash.html', title = "Log Cash Transaction", form = form)
+    return render_template('logcash.html', title = "Log Transaction", form = form)
 
 #Records a bank transaction
 @app.route('/logbank', methods = ['GET', 'POST'])
@@ -153,8 +176,12 @@ def allcashtransaction():
     if current_user.is_anonymous:
         return redirect(url_for(login))
     user = current_user
-    transactions = current_user.allCashTransactions
-    return render_template('cashtransactions.html', user = user, transactions = transactions)
+    transactions = current_user.allTransactions
+    cashlist = []
+    for transaction in transactions: 
+        if transaction.type == 'Cash':
+            cashlist.append(transaction)
+    return render_template('cashtransactions.html', user = user, transactions = cashlist)
 
 
 #displays all bank transactions
@@ -164,8 +191,12 @@ def allbanktransaction():
     if current_user.is_anonymous:
         return redirect(url_for(login))
     user = current_user
-    transactions = current_user.allBankTransactions
-    return render_template('banktransactions.html', user = user, transactions = transactions)
+    transactions = current_user.allTransactions
+    banklist = []
+    for transaction in transactions: 
+        if transaction.type == 'Bank':
+            banklist.append(transaction)
+    return render_template('banktransactions.html', user = user, transactions = banklist)
 
 
 #displays all payapp transactions
@@ -175,8 +206,12 @@ def allpayapptransaction():
     if current_user.is_anonymous:
         return redirect(url_for(login))
     user = current_user
-    transactions = current_user.allPayAppTransactions
-    return render_template('payapptransactions.html', user = user, transactions = transactions)
+    transactions = current_user.allTransactions
+    payapplist = []
+    for transaction in transactions: 
+        if transaction.type == 'PayApp':
+            payapplist.append(transaction)
+    return render_template('payapptransactions.html', user = user, transactions = payapplist)
 
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
