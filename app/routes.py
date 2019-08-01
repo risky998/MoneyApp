@@ -92,25 +92,53 @@ def logcash():
                 user.cashBalance = current_user.cashBalance
                 db.session.commit()
         elif transaction.type == "Bank":
-            if transaction.debit == True:
+            if transaction.transtype == "debit":
                 current_user.bankBalance = current_user.bankBalance - transaction.amount
                 user = User.query.filter_by(username = current_user.username).first()
                 user.bankBalance = current_user.bankBalance
                 db.session.commit()
-            elif transaction.debit == False:
+            elif transaction.transtype == "receipt":
                 current_user.bankBalance = current_user.bankBalance + transaction.amount
                 user = User.query.filter_by(username = current_user.username).first()
                 user.bankBalance = current_user.bankBalance
                 db.session.commit()
+            elif transaction.transtype == 'banktopayapp': 
+                current_user.bankBalance = current_user.bankBalance - transaction.amount
+                current_user.payappBalance = current_user.payappBalance + transaction.amount 
+                user = User.query.filter_by(username = current_user.username).first()
+                user.bankBalance = current_user.bankBalance
+                user.payappBalance = current_user.payappBalance
+                db.session.commit()
+            elif transaction.transtype == 'payapptobank': 
+                current_user.bankBalance = current_user.bankBalance + transaction.amount
+                current_user.payappBalance = current_user.payappBalance - transaction.amount
+                user = User.query.filter_by(username = current_user.username).first()
+                user.bankBalance = current_user.bankBalance
+                user.payappBalance = current_user.payappBalance
+                db.session.commit()
         elif transaction.type == "PayApp":
-            if transaction.debit == True:
+            if transaction.transtype == "debit":
                 current_user.payappBalance = current_user.payappBalance - transaction.amount
                 user = User.query.filter_by(username = current_user.username).first()
                 user.payappBalance = current_user.payappBalance
                 db.session.commit()
-            elif transaction.debit == False:
-                current_user.payappBalance = current_user.payappBalance + transaction.amount
+            elif transaction.transtype == "credit":
+                current_user.pay = current_user.payappBalance + transaction.amount
                 user = User.query.filter_by(username = current_user.username).first()
+                user.payappBalance = current_user.payappBalance
+                db.session.commit()
+            elif transaction.transtype == 'payapptobank': 
+                current_user.bankBalance = current_user.bankBalance + transaction.amount
+                current_user.payappBalance = current_user.payappBalance - transaction.amount 
+                user = User.query.filter_by(username = current_user.username).first()
+                user.bankBalance = current_user.bankBalance
+                user.payappBalance = current_user.payappBalance
+                db.session.commit()
+            elif transaction.transtype == 'banktopayapp': 
+                current_user.bankBalance = current_user.bankBalance - transaction.amount
+                current_user.payappBalance = current_user.payappBalance + transaction.amount 
+                user = User.query.filter_by(username = current_user.username).first()
+                user.bankBalance = current_user.bankBalance
                 user.payappBalance = current_user.payappBalance
                 db.session.commit()
         return redirect(url_for('login'))
