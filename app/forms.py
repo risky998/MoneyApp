@@ -48,6 +48,7 @@ class RegistrationForm(FlaskForm):
 class TransactionForm(FlaskForm):
     date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
     debit = BooleanField('Was this a debit?')
+    transtype = SelectField ('Please select the type of this transaction', choices = [('debit', 'Debit'), ('receipt', 'Receipt'), ('banktopayapp', 'Own Bank Account to Own Pay App Account'), ('payapptobank', 'Own PayApp Account to Own Bank Account')])
     amount = DecimalField("Amount", validators = [DataRequired("Please Enter Numbers Only")])
     type = SelectField('Receipt/Payment Mode', choices = [('Cash', 'Cash'), ('Bank', 'Bank'), ('PayApp', 'PayApp')], validators = [DataRequired()])
     category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')], validators = [DataRequired()])
