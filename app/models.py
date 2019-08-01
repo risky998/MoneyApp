@@ -60,6 +60,7 @@ class Transaction(db.Model):
     description = db.Column(db.String(255), index = True)
     category = db.Column(db.String(255), index = True)
     type = db.Column(db.String(255), index = True)
+    transtype = db.Column(db.String(255), index = True)
 
 # class BankTransaction(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
