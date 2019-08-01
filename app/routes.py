@@ -81,12 +81,12 @@ def logcash():
         db.session.commit()
         flash('Transaction Registered')
         if transaction.type == "Cash":
-            if transaction.transtype == "debit":
+            if transaction.transtype == 'debit':
                 current_user.cashBalance = current_user.cashBalance - transaction.amount
                 user = User.query.filter_by(username = current_user.username).first()
                 user.cashBalance = current_user.cashBalance
                 db.session.commit()
-            elif transaction.debit == "receipt":
+            elif transaction.transtype == 'receipt':
                 current_user.cashBalance = current_user.cashBalance + transaction.amount
                 user = User.query.filter_by(username = current_user.username).first()
                 user.cashBalance = current_user.cashBalance
