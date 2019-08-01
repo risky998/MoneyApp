@@ -69,7 +69,7 @@ def home():
     return render_template('home.html', title = "Home", user=user)
 
 #Logging of a cash transaction
-@app.route('/logcash', methods = ['GET', 'POST'])
+@app.route('/logtransaction', methods = ['GET', 'POST'])
 @login_required
 def logcash():
     if current_user.is_anonymous:
@@ -115,59 +115,8 @@ def logcash():
                 db.session.commit()
         return redirect(url_for('login'))
 
-    return render_template('logcash.html', title = "Log Transaction", form = form)
+    return render_template('logtransaction.html', title = "Log Transaction", form = form)
 
-#Records a bank transaction
-@app.route('/logbank', methods = ['GET', 'POST'])
-@login_required
-def logbank():
-    if current_user.is_anonymous:
-        return redirect(url_for(login))
-    form = TransactionForm()
-    if form.validate_on_submit():
-        transaction = BankTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data)
-        db.session.add(transaction)
-        db.session.commit()
-        flash('Bank Transaction Registered')
-        if transaction.debit == True:
-            current_user.bankBalance = current_user.bankBalance - transaction.amount
-            user = User.query.filter_by(username = current_user.username).first()
-            user.bankBalance = current_user.bankBalance
-            db.session.commit()
-        if transaction.debit == False:
-            current_user.bankBalance = current_user.bankBalance + transaction.amount
-            user = User.query.filter_by(username = current_user.username).first()
-            user.bankBalance = current_user.bankBalance
-            db.session.commit()
-        return redirect(url_for('login'))
-
-    return render_template('logbank.html', title = "Log Bank Transaction", form = form)
-
-#Records a payapp transaction
-@app.route('/logpayapp', methods = ['GET', 'POST'])
-@login_required
-def logpayapp():
-    if current_user.is_anonymous:
-        return redirect(url_for(login))
-    form = TransactionForm()
-    if form.validate_on_submit():
-        transaction = PayAppTransaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data)
-        db.session.add(transaction)
-        db.session.commit()
-        flash('PayApp Transaction Registered')
-        if transaction.debit == True:
-            current_user.payappBalance = current_user.payappBalance - transaction.amount
-            user = User.query.filter_by(username = current_user.username).first()
-            user.payappBalance = current_user.payappBalance
-            db.session.commit()
-        if transaction.debit == False:
-            current_user.payappBalance = current_user.payappBalance + transaction.amount
-            user = User.query.filter_by(username = current_user.username).first()
-            user.payappBalance = current_user.payappBalance
-            db.session.commit()
-        return redirect(url_for('login'))
-
-    return render_template('logpayapp.html', title = "Log PayApp Transaction", form = form)
 
 #displays all cash transactions
 @app.route('/allcashtransaction')
