@@ -20,14 +20,14 @@
  
 
   {% for transaction in transactions %}
-  {%if transaction.debit == True %}
+  {%if transaction.transtype == "debit" %}
   <tbody class = "tbody light">
 
   <th scope = "row"> {{transaction.date}} </th>
   <th scope = "row"> {{transaction.amount}} </th>
   <th scope = "row"> {{transaction.description}} </th>
   <th scope = "row"> {{transaction.category}} </th>
-  <th scope = "row">{% if transaction.debit %} yes {% else %} no {% endif %}</th>
+  <th scope = "row">{{transaction.transtype}}</th>
 
   </tbody>
 
@@ -55,14 +55,14 @@
   
  
    {% for transaction in transactions %}
-   {%if transaction.debit == False %}
+   {%if transaction.transtype == "receipt" %}
    <tbody class = "tbody light">
  
    <th scope = "row"> {{transaction.date}} </th>
    <th scope = "row"> {{transaction.amount}} </th>
    <th scope = "row"> {{transaction.description}} </th>
    <th scope = "row"> {{transaction.category}} </th>
-   <th scope = "row">{% if transaction.debit %} yes {% else %} no {% endif %}</th>
+   <th scope = "row">{{transaction.transtype}}</th>
  
    </tbody>
  
