@@ -76,7 +76,7 @@ def logcash():
         return redirect(url_for(login))
     form = TransactionForm()
     if form.validate_on_submit():
-        transaction = Transaction(user_id = current_user.id, date = form.date.data, debit = form.debit.data, amount = form.amount.data, description= form.description.data, category = form.category.data, type = form.type.data, transtype = form.transtype.data)
+        transaction = Transaction(user_id = current_user.id, date = form.date.data, amount = form.amount.data, description= form.description.data, category = form.category.data, type = form.type.data, transtype = form.transtype.data)
         db.session.add(transaction)
         db.session.commit()
         flash('Transaction Registered')
