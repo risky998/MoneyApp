@@ -158,7 +158,7 @@ def allcashtransaction():
     for transaction in transactions: 
         if transaction.type == 'Cash':
             cashlist.append(transaction)
-    return render_template('cashtransactions.html', user = user, transactions = cashlist)
+    return render_template('cashtransactions.html', user = user, transactions = transactions)
 
 
 #displays all bank transactions
@@ -190,6 +190,16 @@ def allpayapptransaction():
             payapplist.append(transaction)
     return render_template('payapptransactions.html', user = user, transactions = payapplist)
 
+#displays all user transactions (trial) 
+@app.route('/alltransactions')
+@login_required
+def alltransactions():
+    if current_user.is_anonymous:
+        return redirect(url_for(login))
+    user = current_user
+    transactions = current_user.allTransactions
+    return render_template('alltransactions.html', user = user, transactions = transactions)
+
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
@@ -206,6 +216,7 @@ def reset_password_request():
                            title='Reset Password', form=form)
 
 from app.forms import ResetPasswordForm
+
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):

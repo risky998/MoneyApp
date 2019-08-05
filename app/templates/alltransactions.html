@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h1> {{user.username}}'s  Transactions </h1>
+<hr>
+
+
+  <table class = "table">
+  <thead class = "thead-light">
+  <tr>
+    <th scope = "col"> Transaction Date </th>
+    <th scope = "col"> Transaction Description </th>
+    <th scope = "col"> Income </th> 
+    <th scope = "col"> Expense </th>
+    <th scope = "col"> Bank </th> 
+    <th scope = "col"> Cash </th> 
+    <th scope = "col"> Payapp </th>
+
+  </tr>
+  </thead>
+ 
+
+  {% for transaction in transactions %}
+  <tbody class = "tbody light">
+
+  <th scope = "row"> {{transaction.date}} </th>
+  <th scope = "row"> {{transaction.description}} </th>
+  <th scope= "row"> {% if transaction.transtype == "receipt" %} {{transaction.category}} {%endif%}  </th> 
+  <th scope= "row">  {% if transaction.transtype == "debit" %} {{transaction.category}} {%endif%} </th> 
+  <th scope = "row">  </th>
+  <th scope = "row"></th>
+  <th scope = "row"></th>
+
+
+  </tbody>
+
+  {%endfor%}
+
+
+</table>
+
+
+
+{% endblock %}
