@@ -25,9 +25,20 @@
 
   <th scope = "row"> {{transaction.date}} </th>
   <th scope = "row"> {{transaction.description}} </th>
-  <th scope= "row"> {% if transaction.transtype == "receipt" %} {{transaction.category}} {%endif%}  </th> 
-  <th scope= "row">  {% if transaction.transtype == "debit" %} {{transaction.category}} {%endif%} </th> 
-  <th scope = "row"> {%if transaction.type == "Bank"% and transaction.transtype == "debit"} -{{transaction.amount}} {%endif%} </th>
+  <th scope= "row"> {% if transaction.transtype == "receipt" or transaction.transtype == "payapptobank" %} {{transaction.category}} {%endif%}  </th> 
+  <th scope= "row">  {% if transaction.transtype == "debit" or transaction.transtype == "banktopayapp" %} {{transaction.category}} {%endif%} </th> 
+
+  <th scope = "row"> {%if transaction.type == "Bank"%} 
+                        {%if transaction.transtype == "debit" or transaction.transtype == "banktopayapp"%}
+                             -{{transaction.amount}} 
+                        {%elif transaction.transtype == "payapptobank" or transaction.transtype == "receipt"%}
+                            + {{transaction.amount}} 
+                        {% endif %}
+                    {elif transaction.type == "PayApp"%}
+                        {}
+                    {% endif %}
+                        </th>
+
   <th scope = "row"> {%if transaction.type == "Cash"%} {{transaction.amount}} {%endif%} </th>
   <th scope = "row"> {%if transaction.type == "PayApp"%} {{transaction.amount}} {%endif%} </th>
 
