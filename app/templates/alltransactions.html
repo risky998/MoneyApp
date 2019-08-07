@@ -35,6 +35,7 @@
                         {%elif transaction.transtype == "payapptobank" or transaction.transtype == "receipt"%}
                             + {{transaction.amount}} 
                         {% endif %}
+                        <!-- add the elif statement in teh case of a payapp transaction still involving bank transfer here-->
                     {% endif %}
                         </th>
 
