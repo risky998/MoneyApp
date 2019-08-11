@@ -53,7 +53,20 @@
                       {% endif %}
                       </th>
 
-  <th scope = "row"> {%if transaction.type == "PayApp"%} {{transaction.amount}} {%endif%} </th>
+  <th scope = "row"> {%if transaction.type == "PayApp"%} 
+                        {%if transaction.transtype == "debit" or transaction.transtype == "payapptobank"%}
+                           -{{transaction.amount}} 
+                        {%elif transaction.transtype == "banktopayapp" or transaction.transtype == "receipt"%}
+                           + {{transaction.amount}} 
+                        {% endif %}
+                      {% elif transaction.type == "Bank" %}
+                        {% if transaction.transtype == "banktopayapp" %}
+                          + {{transaction.amount}}
+                        {% elif transaction.transtype == "payapptobank" %}
+                          - {{transaction.amount}}
+                      {% endif %}
+  {% endif %}
+  </th>
 
 
   </tbody>
