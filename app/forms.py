@@ -42,10 +42,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('This email has already been registered on this website. Please use a different email')
 
 class StartingBalanceForm(FlaskForm): 
-    cash = DecimalField('Enter your starting cash balance', validators=[DataRequired()])
-    bank = DecimalField('Enter your starting bank balance', validators = [DataRequired()])
-    payapp = DecimalField('Enter your starting payapp balance', validators = [DataRequired()])
-    submit = SubmitField('Submit Starting Balances')
+    currency = SelectField('Select your Currency', choices = [('USD', 'USD'), ('SGD', 'SGD'), ('GBP', 'GBP')], validators= [DataRequired()])
+    cash = DecimalField('Enter your opening cash balance', validators=[DataRequired('Please enter numbers only')])
+    bank = DecimalField('Enter your opening bank balance', validators = [DataRequired('Please enter numbers only')])
+    payapp = DecimalField('Enter your opening payapp balance', validators = [DataRequired('Please enter numbers only')])
+    submit = SubmitField('Submit Opening Balances')
 
 class TransactionForm(FlaskForm):
     date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])

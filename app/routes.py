@@ -22,7 +22,7 @@ def register():
         return redirect(url_for(home))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username = form.username.data, email = form.email.data, cashBalance = 0, bankBalance=0, payappBalance=0)
+        user = User(username = form.username.data, email = form.email.data, cashBalance = 0, bankBalance=0, payappBalance=0, currency = "")
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -41,6 +41,7 @@ def startingbalance():
         user.cashBalance = form.cash.data
         user.bankBalance = form.bank.data
         user.payappBalance = form.payapp.data
+        user.currency = form.currency.data
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('startingbalance.html', title = "Record Starting Balances", form = form)

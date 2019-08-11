@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
     bankBalance = db.Column(db.Float, index = True)
     payappBalance = db.Column(db.Float, index = True)
     password_hash = db.Column(db.String(128))
+    currency = db.Column(db.String (128))
 
     #creating relations between user and transactions
     allTransactions = db.relationship('Transaction', backref = 'spender',lazy = 'dynamic')
