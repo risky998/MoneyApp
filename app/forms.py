@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DecimalField, SelectField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, InputRequired
 from app.models import User, Transaction
 
 
@@ -43,9 +43,9 @@ class RegistrationForm(FlaskForm):
 
 class StartingBalanceForm(FlaskForm): 
     currency = SelectField('Select your Currency', choices = [('USD', 'USD'), ('SGD', 'SGD'), ('GBP', 'GBP')], validators= [DataRequired()])
-    cash = DecimalField('Enter your opening cash balance', validators=[DataRequired('Please enter numbers only')])
-    bank = DecimalField('Enter your opening bank balance', validators = [DataRequired('Please enter numbers only')])
-    payapp = DecimalField('Enter your opening payapp balance', validators = [DataRequired('Please enter numbers only')])
+    cash = DecimalField('Enter your opening cash balance', validators=[InputRequired('Please enter numbers only')])
+    bank = DecimalField('Enter your opening bank balance', validators = [InputRequired('Please enter numbers only')])
+    payapp = DecimalField('Enter your opening payapp balance', validators = [InputRequired('Please enter numbers only')])
     submit = SubmitField('Submit Opening Balances')
 
 class TransactionForm(FlaskForm):
@@ -54,7 +54,8 @@ class TransactionForm(FlaskForm):
     transtype = SelectField ('Please select the type of this transaction', choices = [('debit', 'Expense'), ('receipt', 'Receipt'), ('banktopayapp', 'Transfer from Own Bank Account to Own Pay App Account'), ('payapptobank', 'Transfer from Own PayApp Account to Own Bank Account')])
     amount = DecimalField("Amount", validators = [DataRequired("Please Enter Numbers Only")])
     type = SelectField('Receipt/Payment Mode', choices = [('Cash', 'Cash'), ('Bank', 'Bank'), ('PayApp', 'PayApp')], validators = [DataRequired()])
-    category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')], validators = [DataRequired()])
+    category = SelectField('Transaction Category', choices = [('Clothes', 'Clothes'), ('Drinks', 'Drinks'), ('Entertainment', 'Entertainment'), ('Food and Beverage', 'Food and Beverage'), ('Fuel', 'Fuel'), ('Groceries', 'Groceries'), ('Health', 'Health'), ('Holiday', 'Holiday'),
+    ('Home', 'Home'), ('Laundry', 'Laundry'), ('Rent', 'Rent'), ('Shopping', 'Shopping'), ('Transport', 'Transport'), ('Others', 'Others')], validators = [DataRequired()])
     description = StringField('Describe your transaction (e.g GoJek trip back home)', validators = [DataRequired()])
     submit = SubmitField('Log Transaction')
 
