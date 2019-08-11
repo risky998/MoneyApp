@@ -7,7 +7,7 @@
     {% if current_user.is_anonymous %}
    <h1>Hello user!</h1>
    <p> Please <a href = "{{url_for('login')}}"> log in</a> to continue. </p>
-    <p> No account yet? Head over <a href = "{{url_for('register')}}"> here </a> to register! </p>
+    <p> Don't have an account yet? Click <a href = "{{url_for('register')}}"> here </a> to register! </p>
 
    {%else%}
    <h1> Hello, {{ current_user.username }} </h1>

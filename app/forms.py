@@ -55,7 +55,7 @@ class TransactionForm(FlaskForm):
     amount = DecimalField("Amount", validators = [DataRequired("Please Enter Numbers Only")])
     type = SelectField('Receipt/Payment Mode', choices = [('Cash', 'Cash'), ('Bank', 'Bank'), ('PayApp', 'PayApp')], validators = [DataRequired()])
     category = SelectField('Transaction Category', choices = [('Food and Beverage', 'Food and Beverage'), ('Transport', 'Transport'), ('Lifestyle', 'Lifestyle'), ('Other', 'Other')], validators = [DataRequired()])
-    description = StringField('Describe your transaction', validators = [DataRequired()])
+    description = StringField('Describe your transaction (e.g GoJek trip back home)', validators = [DataRequired()])
     submit = SubmitField('Log Transaction')
 
 
