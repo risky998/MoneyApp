@@ -26,7 +26,7 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired()])
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
-    password2 = PasswordField('Repeat Password', validators = [DataRequired(), EqualTo('password')])
+    password2 = PasswordField('Repeat Password', validators = [DataRequired(), EqualTo('password', message = "Passwords must match")])
     submit = SubmitField('Register')
 
  # If the username already exists in db, they will need to use a different name
