@@ -43,9 +43,9 @@ class RegistrationForm(FlaskForm):
 
 class StartingBalanceForm(FlaskForm): 
     currency = SelectField('Select your Currency', choices = [('USD', 'USD'), ('SGD', 'SGD'), ('GBP', 'GBP')], validators= [DataRequired()])
-    cash = DecimalField('Enter your opening cash balance', validators=[InputRequired('Please enter numbers only')])
-    bank = DecimalField('Enter your opening bank balance', validators = [InputRequired('Please enter numbers only')])
-    payapp = DecimalField('Enter your opening payapp balance', validators = [InputRequired('Please enter numbers only')])
+    cash = DecimalField('Enter your opening cash balance', validators=[InputRequired('Please enter valid amount. Special characters not permitted.')])
+    bank = DecimalField('Enter your opening bank balance', validators = [InputRequired('Please enter valid amount. Special characters not permitted.')])
+    payapp = DecimalField('Enter your opening payapp balance', validators = [InputRequired('Please enter valid amount. Special characters not permitted.')])
     submit = SubmitField('Submit Opening Balances')
 
 class TransactionForm(FlaskForm):
