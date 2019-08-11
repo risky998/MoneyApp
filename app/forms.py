@@ -54,8 +54,8 @@ class TransactionForm(FlaskForm):
     transtype = SelectField ('Please select the type of this transaction', choices = [('debit', 'Expense'), ('receipt', 'Receipt'), ('banktopayapp', 'Transfer from Own Bank Account to Own Pay App Account'), ('payapptobank', 'Transfer from Own PayApp Account to Own Bank Account')])
     amount = DecimalField("Amount", validators = [DataRequired("Please Enter Numbers Only")])
     type = SelectField('Receipt/Payment Mode', choices = [('Cash', 'Cash'), ('Bank', 'Bank'), ('PayApp', 'PayApp')], validators = [DataRequired()])
-    category = SelectField('Transaction Category', choices = [('Clothes', 'Clothes'), ('Drinks', 'Drinks'), ('Entertainment', 'Entertainment'), ('Food and Beverage', 'Food and Beverage'), ('Fuel', 'Fuel'), ('Groceries', 'Groceries'), ('Health', 'Health'), ('Holiday', 'Holiday'),
-    ('Home', 'Home'), ('Laundry', 'Laundry'), ('Rent', 'Rent'), ('Shopping', 'Shopping'), ('Transport', 'Transport'), ('Others', 'Others')], validators = [DataRequired()])
+    category = SelectField('Transaction Category', choices = [('Allowance', 'Allowance'), ('Clothes', 'Clothes'), ('Drinks', 'Drinks'), ('Entertainment', 'Entertainment'), ('Food and Beverage', 'Food and Beverage'), ('Fuel', 'Fuel'), ('Gift', 'Gift'), ('Groceries', 'Groceries'), ('Health', 'Health'), ('Holiday', 'Holiday'),
+    ('Home', 'Home'), ('Laundry', 'Laundry'), ('Rent', 'Rent'), ('Salary', 'Salary'), ('Shopping', 'Shopping'), ('Transport', 'Transport'), ('Others', 'Others')], validators = [DataRequired()])
     description = StringField('Describe your transaction (e.g GoJek trip back home)', validators = [DataRequired()])
     submit = SubmitField('Log Transaction')
 
