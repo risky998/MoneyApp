@@ -19,7 +19,6 @@
   </tr>
   </thead>
  
-  <!-- <-- add statements within bank transaction for payapp to bank. Make sure it shows plus and minus for payapp anmd bank in the same transaction --!> -->
 
   {% for transaction in transactions %}
   <tbody class = "tbody light">
@@ -35,10 +34,25 @@
                         {%elif transaction.transtype == "payapptobank" or transaction.transtype == "receipt"%}
                             + {{transaction.amount}} 
                         {% endif %}
+                      {% elif transaction.type == "PayApp" %}
+                        {% if transaction.transtype == "banktopayapp" %}
+                            - {{transaction.amount}}
+                        {% elif transaction.transtype == "payapptobank" %}
+                            + {{transaction.amount}}
+                        {% endif %}
                     {% endif %}
+                    
                         </th>
 
-  <th scope = "row"> {%if transaction.type == "Cash"%} {{transaction.amount}} {%endif%} </th>
+  <th scope = "row"> {%if transaction.type == "Cash"%} 
+                        {% if transaction.transtype == "receipt" %}
+                            + {{transaction.amount}}
+                        {% elif transaction.transtype == "debit" %} 
+                            - {{transaction.amount}}
+                        {% endif %}
+                      {% endif %}
+                      </th>
+
   <th scope = "row"> {%if transaction.type == "PayApp"%} {{transaction.amount}} {%endif%} </th>
 
 
