@@ -1,7 +1,7 @@
 
 from app import app, db
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm, TransactionForm, ResetPasswordRequestForm
+from app.forms import LoginForm, RegistrationForm, TransactionForm, ResetPasswordRequestForm, StartingBalanceForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Transaction
 from werkzeug.urls import url_parse
@@ -22,13 +22,29 @@ def register():
         return redirect(url_for(home))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username = form.username.data, email = form.email.data, cashBalance = form.cash.data, bankBalance=form.bank.data, payappBalance=form.payapp.data)
+        user = User(username = form.username.data, email = form.email.data, cashBalance = 0, bankBalance=0, payappBalance=0)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congrats, you are now a registered user')
         return redirect(url_for('login'))
     return render_template('registration.html', title = "Register", form = form)
+
+#route in order to allow the users to set their starting balances
+@app.route('/startingbalance', methods = ['GET', 'POST'])
+def startingbalance(): 
+    if current_user.is_anonymous: 
+        return redirect(url_for(login))
+    form = StartingBalanceForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username = current_user.username).first()
+        user.cashBalance = form.cash.data
+        user.bankBalance = form.bank.data
+        user.payappBalance = form.payapp.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('startingbalance.html', title = "Record Starting Balances", form = form)
+
 
 #route to login a user
 @app.route('/login', methods=['GET', 'POST'])

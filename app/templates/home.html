@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-   <h1>Hi, {{ current_user.username }}!</h1>
+   <h1>{{ current_user.username }}'s Money Tracker</h1>
 
    <p> Your cash balance is: {{current_user.cashBalance}}
      <br>
@@ -10,13 +10,16 @@
      Your PayLah! and PayNow! balance is: {{current_user.payappBalance}}
    </p>
 
+   <a href = "{{url_for('startingbalance')}}">  Update your Opening Balances </a> <br>
    <a href = "{{url_for('logcash')}}"> Record a Transaction </a> <br>
    
 
-   <a href = "{{url_for('allcashtransaction')}}"> Check all your cash transactions </a> <br>
+   
+
+   <!-- <a href = "{{url_for('allcashtransaction')}}"> Check all your cash transactions </a> <br>
    <a href = "{{url_for('allbanktransaction')}}"> Check all your bank transactions </a> <br>
-   <a href = "{{url_for('allpayapptransaction')}}"> Check all your payapp transactions </a>
-   <a href = "{{url_for('alltransactions')}}"> Check all your transactions here </a>
+   <a href = "{{url_for('allpayapptransaction')}}"> Check all your payapp transactions </a> -->
+   <a href = "{{url_for('alltransactions')}}"> View your transactions </a>
 
 
 

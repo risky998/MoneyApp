@@ -27,9 +27,6 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     password2 = PasswordField('Repeat Password', validators = [DataRequired(), EqualTo('password')])
-    cash = DecimalField('Starting Cash Balance')
-    bank = DecimalField('Starting Bank Balance')
-    payapp = DecimalField('Starting PayApp Balance')
     submit = SubmitField('Register')
 
  # If the username already exists in db, they will need to use a different name
@@ -44,6 +41,11 @@ class RegistrationForm(FlaskForm):
         if email is not None:
             raise ValidationError('This email has already been registered on this website. Please use a different email')
 
+class StartingBalanceForm(FlaskForm): 
+    cash = DecimalField('Enter your starting cash balance', validators=[DataRequired()])
+    bank = DecimalField('Enter your starting bank balance', validators = [DataRequired()])
+    payapp = DecimalField('Enter your starting payapp balance', validators = [DataRequired()])
+    submit = SubmitField('Submit Starting Balances')
 
 class TransactionForm(FlaskForm):
     date = StringField('Date - Enter dd/mm/yy', validators = [DataRequired()])
