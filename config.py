@@ -13,3 +13,5 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['rishabhsarup@gmail.com'] #can be editied to change the email admin at any time.
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+    
