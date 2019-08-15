@@ -22,7 +22,7 @@ def register():
         return redirect(url_for(home))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username = form.username.data, email = form.email.data, currency = "")
+        user = User(username = form.username.data, email = form.email.data, currency = "", cashBalance= 0, bankBalance = 0, payappBalance = 0)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
